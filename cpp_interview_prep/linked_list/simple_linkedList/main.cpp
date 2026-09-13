@@ -7,8 +7,10 @@ struct Node
     // Address of the next Node
     Node* next;
 };
-
+Okay
+void insertFront(Node*& head, int value);
 void insertBack(Node*& head, int value);
+bool insertAtPosition(Node*& head, int value, int position);
 bool contains(Node* head, int value);
 bool removeValue(Node*& head, int value);
 void reverseList(Node*& head);
@@ -20,41 +22,29 @@ int main()
     Node* head = nullptr;
 
     insertBack(head, 10);
+    printList(head);
     insertBack(head, 20);
+    printList(head);
     insertBack(head, 30);
-    insertBack(head, 40);
-
     printList(head);
 
-    std::cout << "Contains 30: "
-              << contains(head, 30)
-              << '\n';
-
-    std::cout << "Contains 50: "
-              << contains(head, 99)
-              << '\n';
-
+    insertFront(head, 5);
     printList(head);
 
-    removeValue(head, 30);
-    printList(head);
-
-    removeValue(head, 10);
-    printList(head);
-
-    std::cout << "Before reverse:\n";
-    printList(head);
-
-    reverseList(head);
-
-    std::cout << "After reverse:\n";
-    printList(head);
-
-    deleteList(head);
-    std::cout << "After delete:\n";
+    insertAtPosition(head, 15, 1);
     printList(head);
 
     return 0;
+}
+
+void insertFront(Node*& head, int value)
+{
+    Node* newNode = new Node();
+
+    newNode->value = value;
+    newNode->next = head;
+
+    head = newNode;
 }
 
 void insertBack(Node*& head, int value){
@@ -79,6 +69,45 @@ void insertBack(Node*& head, int value){
     }
 
     current->next = newNode;
+}
+
+bool insertAtPosition(Node*& head, int value, int position)
+{
+    if (position < 0)
+    {
+        return false;
+    }
+
+    if (position == 0)
+    {
+        insertFront(head, value);
+        return true;
+    }
+
+    Node* current = head;
+
+    for (int i = 0; i < position - 1; i++)
+    {
+        if (current == nullptr)
+        {
+            return false;
+        }
+
+        current = current->next;
+    }
+
+    if (current == nullptr)
+    {
+        return false;
+    }
+
+    Node* newNode = new Node();
+    newNode->value = value;
+
+    newNode->next = current->next;
+    current->next = newNode;
+
+    return true;
 }
 
 void printList(Node* head)
