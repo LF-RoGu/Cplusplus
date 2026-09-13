@@ -7,7 +7,7 @@ struct Node
     // Address of the next Node
     Node* next;
 };
-Okay
+
 void insertFront(Node*& head, int value);
 void insertBack(Node*& head, int value);
 bool insertAtPosition(Node*& head, int value, int position);
