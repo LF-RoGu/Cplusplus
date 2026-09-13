@@ -1,4 +1,6 @@
+#include <filesystem>
 #include <iostream>
+#include <bits/locale_facets_nonio.h>
 
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 struct Node {
@@ -9,39 +11,24 @@ struct Node {
 
 void insert(Node*& root, int value);
 
+void printInOrder(Node* root);
+void printTree(Node* root, int space = 0);
+
 int main()
 {
     Node* root = nullptr;
 
-    Node* firstNode = new Node();
-    firstNode->value = 10;
-    firstNode->left = nullptr;
-    firstNode->right = nullptr;
-    root = firstNode;
+    insert(root, 10);
+    std::cout << "\nAfter inserting 10:\n";
+    printTree(root);
 
-    Node* secondNode = new Node();
-    secondNode->value = 5;
-    secondNode->left = nullptr;
-    secondNode->right = nullptr;
-    root->left = secondNode;
+    insert(root, 5);
+    std::cout << "\nAfter inserting 5:\n";
+    printTree(root);
 
-    Node* fourthNode = new Node();
-    fourthNode->value = 7;
-    fourthNode->left = nullptr;
-    fourthNode->right = nullptr;
-    root->left->right = fourthNode;
-
-    Node* fifthNode = new Node();
-    fifthNode->value = 5;
-    fifthNode->left = nullptr;
-    fifthNode->right = nullptr;
-    root->left->left = fifthNode;
-
-    Node* thirdNode = new Node();
-    thirdNode->value = 20;
-    thirdNode->left = nullptr;
-    thirdNode->right = nullptr;
-    root->right = thirdNode;
+    insert(root, 20);
+    std::cout << "\nAfter inserting 20:\n";
+    printTree(root);
 
     return 0;
 }
@@ -94,4 +81,42 @@ void insert(Node*& root, int value)
             return;
         }
     }
+}
+
+void printInOrder(Node* root)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+
+    printInOrder(root->left);
+
+    std::cout << root->value << " ";
+
+    printInOrder(root->right);
+}
+
+void printTree(Node* root, int space)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+
+    const int DISTANCE = 5;
+    space += DISTANCE;
+
+    printTree(root->right, space);
+
+    std::cout << '\n';
+
+    for (int i = DISTANCE; i < space; i++)
+    {
+        std::cout << ' ';
+    }
+
+    std::cout << root->value << '\n';
+
+    printTree(root->left, space);
 }
